@@ -1,9 +1,12 @@
 var c = document.getElementById("mainCanvas");
 var ctx = c.getContext("2d");
 
+ctx.canvas.width = 500;
+ctx.canvas.height = 500;
+
 const square = {
     height: 25,
-    width: 50,
+    width: 25,
     jumping: true,
     x: 0,
     y: 0,
@@ -18,15 +21,15 @@ const controls = {
 
     keyListener: function (event) {
         let key_state = (event.type == "keydown") ? true : false;
-
+        console.log(event.keyCode);
         switch (event.keyCode) {
-            case 37:
+            case 65:
                 controls.left = key_state;
                 break;
-            case 38:
+            case 32:
                 controls.up = key_state;
                 break;
-            case 39:
+            case 68:
                 controls.right = key_state;
                 break;
         }
@@ -54,16 +57,16 @@ const loop = function() {
     square.dx *= 0.9;
     square.dy *= 0.9;
 
-    if (square.y > 175 - 20 - 50) {
+    if (square.y > 450 - 20 - 50) {
         square.jumping = false;
-        square.y = 175 - 20 - 50;
+        square.y = 450 - 20 - 50;
         square.dy = 0;
     }
 
-    if (square.x < -50) {
+    if (square.x < 0 - square.width) {
         square.x = 500;
     } else if (square.x > 500) {
-        square.x = -50;
+        square.x = 0;
     }
 
     ctx.fillStyle = "rgb(255,255,255)"; //background
@@ -74,11 +77,11 @@ const loop = function() {
     ctx.rect(square.x, square.y, square.width, square.height);
     ctx.fill();
 
-    ctx.strokeStyle = "#2E2532";
-    ctx.lineWidth = 30;
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 40;
     ctx.beginPath();
-    ctx.moveTo(0, 500);
-    ctx.lineTo(500, 500);
+    ctx.moveTo(0, 425);
+    ctx.lineTo(500, 425);
     ctx.stroke();
 
     window.addEventListener('keydown', controls.keyListener);
